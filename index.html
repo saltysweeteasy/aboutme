@@ -152,13 +152,35 @@
         }
 
         /* FONT SIZES */
+        
+        /* Wrapper for Name and Badge */
+        .name-wrapper {
+            display: flex; /* Aligns the name and badge side-by-side */
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 5px; /* Add some space below the name block */
+        }
+        
+        /* NEW: Image-based Verified Badge Styling */
+        .verified-img { 
+            width: 25px; /* Set a specific size */
+            height: 25px;
+            margin-left: 10px;
+            /* Apply a subtle glow to the image itself */
+            filter: drop-shadow(0 0 3px var(--neon-blue));
+            /* Ensure alignment with text base line */
+            vertical-align: middle; 
+            margin-top: -5px; /* Minor adjustment for perfect center alignment */
+        }
+
         .name { 
             font-size: 1.7rem;
-            margin-bottom: 0px;
+            margin-bottom: 0px; 
             color: #fff; 
             text-shadow: 2px 2px 0 var(--neon-pink), -2px -2px 0 var(--neon-blue); 
             font-weight: 700; 
         }
+
         .title { 
             font-size: 0.9rem; 
             margin-bottom: 5px;
@@ -457,7 +479,11 @@
                 <img src="https://scontent.fmnl25-4.fna.fbcdn.net/v/t39.30808-6/557621090_1879534862913058_3142175480419287811_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeE4I9J7YVH8UR6ynOZUdru-o3T0CuqLmL6jdPQK6ouYvhtSQ5Jn9rwIH1lhXpCdX8M8JtRJ15QB-6m_J9COJrGu&_nc_ohc=JpDWV1GLVVMQ7kNvwH_y1LB&_nc_oc=AdnMHr5owaVLSyIAoBU6fSDwycpOEkT7JoK_zidvnOiyujaFBIT1cTYSP4RgrlfXTYE&_nc_zt=23&_nc_ht=scontent.fmnl25-4.fna&_nc_gid=uS-Cbbj9_G2IeOqPMRfmeQ&oh=00_AfgYd7Jkhj9Lk1ze1BpYO9x0_S2K7jgQPrABUsQFRXdp0w&oe=692C5323" alt="Profile" class="profile-pic">
             </div>
             
-            <h1 class="name">ANDREW SANTIAGO</h1>
+            <div class="name-wrapper">
+                <h1 class="name">ANDREW SANTIAGO</h1>
+                <img src="/verified_badge.png" alt="Verified Badge" class="verified-img">
+            </div>
+            
             <p class="title">> SOFTWARE DEVELOPER, MUSICIAN, COMPUTER ENGINEER</p>
             
             <p class="description">
