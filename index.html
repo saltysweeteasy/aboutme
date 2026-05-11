@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CYBER_PROFILE.exe | System Access</title>
+    <title>CYBER_PROFILE.exe | Dynamic Visual Player</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
@@ -33,6 +33,31 @@
             flex-direction: column;
             align-items: center;
             position: relative;
+        }
+
+        /* --- BACKGROUND VIDEO LAYER --- */
+        .bg-video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 110%;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        .bg-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+            opacity: 0.4;
+            transition: opacity 1s ease;
         }
 
         /* --- BACKGROUND LAYERS --- */
@@ -142,6 +167,7 @@
             box-shadow: 0 0 15px var(--neon-blue), inset 0 0 10px var(--neon-pink);
             z-index: 22; 
             position: relative;
+            transition: border-color 0.5s ease, box-shadow 0.5s ease;
         }
 
         #profileVisualizer {
@@ -169,6 +195,7 @@
             filter: drop-shadow(0 0 3px var(--neon-blue));
             vertical-align: middle; 
             margin-top: -5px;
+            transition: filter 0.5s ease;
         }
 
         .name { 
@@ -177,6 +204,7 @@
             color: #fff; 
             text-shadow: 2px 2px 0 var(--neon-pink), -2px -2px 0 var(--neon-blue); 
             font-weight: 700; 
+            transition: text-shadow 0.5s ease;
         }
 
         .title { 
@@ -184,6 +212,7 @@
             margin-bottom: 5px;
             color: var(--neon-blue); 
             text-shadow: 0 0 8px var(--neon-blue); 
+            transition: color 0.5s ease, text-shadow 0.5s ease;
         }
         .description { 
             line-height: 1.5; 
@@ -302,18 +331,18 @@
 
         /* --- NEW: Playlist Scrollbar Styling (Themed Look) --- */
         .playlist-container::-webkit-scrollbar {
-            width: 8px; /* Width of the scrollbar */
+            width: 8px;
         }
         .playlist-container::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.4); /* Dark track */
+            background: rgba(0, 0, 0, 0.4);
         }
         .playlist-container::-webkit-scrollbar-thumb {
-            background: var(--neon-blue); /* Neon Blue thumb */
+            background: var(--neon-blue);
             border-radius: 4px;
-            border: 1px solid var(--neon-pink); /* Pink border for contrast */
+            border: 1px solid var(--neon-pink);
         }
         .playlist-container::-webkit-scrollbar-thumb:hover {
-            background: var(--neon-pink); /* Pink on hover */
+            background: var(--neon-pink);
         }
         
         /* 3. Message Container (Centered - Hidden by default) */
@@ -418,7 +447,7 @@
             transform: translate(-50%, -50%) scale(0.9);
             width: 80vw;
             max-width: 600px;
-            max-height: 80vh; /* Set max height for scrollability */
+            max-height: 80vh;
             background: rgba(0, 0, 0, 0.98);
             border: 2px solid var(--neon-green);
             border-top: 4px solid var(--neon-blue);
@@ -472,25 +501,24 @@
 
         .about-content {
             flex-grow: 1;
-            overflow-y: auto; /* Scrollable content area */
+            overflow-y: auto;
             padding-right: 15px; 
             padding-left: 5px;
         }
 
-        /* --- NEW: About Content Scrollbar Styling (Themed Look) --- */
         .about-content::-webkit-scrollbar {
-            width: 8px; /* Width of the scrollbar */
+            width: 8px;
         }
         .about-content::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.4); /* Dark track */
+            background: rgba(0, 0, 0, 0.4);
         }
         .about-content::-webkit-scrollbar-thumb {
-            background: var(--neon-pink); /* Neon Pink thumb */
+            background: var(--neon-pink);
             border-radius: 4px;
-            border: 1px solid var(--neon-blue); /* Blue border for contrast */
+            border: 1px solid var(--neon-blue);
         }
         .about-content::-webkit-scrollbar-thumb:hover {
-            background: var(--neon-blue); /* Blue on hover */
+            background: var(--neon-blue);
         }
         
         .about-section-header {
@@ -581,7 +609,6 @@
             background: linear-gradient(90deg, var(--neon-pink), var(--neon-blue)); 
         }
 
-        /* --- CONTROLS LAYOUT FIX (GRID SYSTEM) --- */
         .controls-wrapper {
             display: grid;
             grid-template-columns: 1fr auto 1fr;
@@ -639,7 +666,6 @@
             opacity: 0.8; 
         }
 
-        /* Message Toggle Button (Bottom Right) */
         .message-toggle-btn {
             position: fixed;
             bottom: 120px;
@@ -672,42 +698,24 @@
         }
 
         @media (max-width: 600px) {
-            .profile-section { 
-                margin-top: 5vh; 
-            }
-            .playlist-container { 
-                bottom: 160px; 
-                left: 10px; 
-                width: 200px; 
-            }
-            .message-container {
-                width: 90vw;
-            }
-            .about-container {
-                width: 90vw;
-            }
-            .message-toggle-btn {
-                bottom: 160px;
-                right: 10px;
-            }
-            .name { 
-                font-size: 1.5rem; 
-            }
-            .profile-wrapper { 
-                width: 180px; 
-                height: 180px; 
-            }
-            .profile-pic { 
-                width: 90px; 
-                height: 90px; 
-            }
-            .progress-area, .controls-wrapper { 
-                width: 85vw; 
-            }
+            .profile-section { margin-top: 5vh; }
+            .playlist-container { bottom: 160px; left: 10px; width: 200px; }
+            .message-container { width: 90vw; }
+            .about-container { width: 90vw; }
+            .message-toggle-btn { bottom: 160px; right: 10px; }
+            .name { font-size: 1.5rem; }
+            .profile-wrapper { width: 180px; height: 180px; }
+            .profile-pic { width: 90px; height: 90px; }
+            .progress-area, .controls-wrapper { width: 85vw; }
         }
     </style>
 </head>
 <body>
+
+    <!-- Background Video Container -->
+    <div class="bg-video-container" id="bgVideoContainer">
+        <video id="bgVideo" class="bg-video" autoplay loop muted playsinline></video>
+    </div>
 
     <div id="start-screen">
         <div class="start-btn">INITIALIZE SYSTEM</div>
@@ -727,19 +735,15 @@
 
     <div class="container">
         <div class="profile-section" id="profileSection">
-            
             <div class="profile-wrapper">
                 <canvas id="profileVisualizer"></canvas>
                 <img src="andrew.png" alt="Andrew" class="profile-pic">
             </div>
-            
             <div class="name-wrapper">
                 <h1 class="name">ANDREW SANTIAGO</h1>
                 <img src="verified_badge.png" alt="Verified Badge" class="verified-img">
             </div>
-            
             <p class="title">> SOFTWARE DEVELOPER, MUSICIAN, COMPUTER ENGINEER</p>
-            
             <p class="description">
                 > SYSTEM STATUS: ONLINE<br>
                 > MISSION: BUILDING THE FUTURE<br>
@@ -758,41 +762,17 @@
             <i class="fas fa-id-card"></i> ACCESSING PROFILE DATA
             <button class="close-btn" id="aboutCloseBtn">MINIMIZE</button>
         </div>
-        
         <div class="about-content">
             <p class="about-section-header">> ABOUT ME</p>
-            <p style="color: #e0e0e0; margin-bottom: 15px;">
-                21 year old Filipino, URS student and aspiring Software Engineer based at Antipolo Rizal
-            </p>
-
+            <p style="color: #e0e0e0; margin-bottom: 15px;">21 year old Filipino, URS student and aspiring Software Engineer based at Antipolo Rizal</p>
             <p class="about-section-header">> OVER INFORMATION</p>
-            <ul class="about-list">
-                <li>Name : Andrew Jethro Santiago</li>
-                <li>Birthday : October 6, 2004</li>
-                <li>Currently Studying at : University of Rizal System (URSAC)</li>
-                <li>Course : Bachelor of Science in Computer Engineering (BSCpE)</li>
-            </ul>
-
+            <ul class="about-list"><li>Name : Andrew Jethro Santiago</li><li>Birthday : October 6, 2004</li><li>Currently Studying at : University of Rizal System (URSAC)</li><li>Course : Bachelor of Science in Computer Engineering (BSCpE)</li></ul>
             <p class="about-section-header">> SAMPLE WORKS</p>
-            <ul class="about-list">
-                <li>About Me : https://saltysweeteasy.github.io/aboutme/</li>
-                <li>E-Commerce : https://shopeasy-store.web.app/account.html</li>
-            </ul>
-
+            <ul class="about-list"><li>About Me : https://saltysweeteasy.github.io/aboutme/</li><li>E-Commerce : https://shopeasy-store.web.app/account.html</li></ul>
             <p class="about-section-header">> INTERESTS</p>
-            <ul class="about-list">
-                <li>Loves to play Roblox, League of Legends</li>
-                <li>Curious about game development, loves to make web development</li>
-            </ul>
-
+            <ul class="about-list"><li>Loves to play Roblox, League of Legends</li><li>Curious about game development, loves to make web development</li></ul>
             <p class="about-section-header">> Social Media</p>
-            <ul class="about-list">
-                <li>Facebook : Andrew Jethro Santiago</li>
-                <li>Instagram : Kakkoi.Tokito</li>
-                <li>Discord : glazedeverglade4622</li>
-                <li>Roblox : glazedeverglade4622</li>
-                <li>github : saltysweeteasy</li>
-            </ul>
+            <ul class="about-list"><li>Facebook : Andrew Jethro Santiago</li><li>Instagram : Kakkoi.Tokito</li><li>Discord : glazedeverglade4622</li><li>Roblox : glazedeverglade4622</li><li>github : saltysweeteasy</li></ul>
         </div>
     </div>
 
@@ -801,157 +781,72 @@
     </button>
 
     <div class="message-container" id="messageContainer">
-        <div class="message-header">
-            <i class="fas fa-satellite-dish"></i> ANONYMOUS MESSAGE
-        </div>
+        <div class="message-header"><i class="fas fa-satellite-dish"></i> ANONYMOUS MESSAGE</div>
         <form id="messageForm">
             <input type="text" id="senderName" placeholder="[ CODENAME ]" required>
             <textarea id="messageBody" placeholder="[ MESSAGE ]" rows="4" required></textarea>
-            <button type="submit" id="transmitBtn">
-                <i class="fas fa-paper-plane"></i> TRANSMIT_DATA
-            </button>
+            <button type="submit" id="transmitBtn"><i class="fas fa-paper-plane"></i> TRANSMIT_DATA</button>
         </form>
         <div id="messageStatus" class="status-msg"></div>
     </div>
 
     <div class="music-section" id="musicSection">
-        <div class="now-playing">
-            <div class="song-title" id="nowPlayingTitle">SYSTEM_AUDIO_INITIALIZING...</div>
-        </div>
-        
-        <div class="progress-area">
-            <span id="currTime">0:00</span>
-            <input type="range" min="0" max="100" value="0" class="progress-bar" id="seekSlider">
-            <span id="totalDur">0:00</span>
-        </div>
-
+        <div class="now-playing"><div class="song-title" id="nowPlayingTitle">SYSTEM_AUDIO_INITIALIZING...</div></div>
+        <div class="progress-area"><span id="currTime">0:00</span><input type="range" min="0" max="100" value="0" class="progress-bar" id="seekSlider"><span id="totalDur">0:00</span></div>
         <div class="controls-wrapper">
-            <div class="left-controls">
-                <button class="control-btn" id="loopBtn" title="Toggle Loop"><i class="fas fa-repeat"></i></button>
-            </div>
-
-            <div class="center-controls">
-                <button class="control-btn" id="prevBtn"><i class="fas fa-step-backward"></i></button>
-                <button class="control-btn" id="playPauseBtn"><i class="fas fa-play"></i></button>
-                <button class="control-btn" id="nextBtn"><i class="fas fa-step-forward"></i></button>
-            </div>
-
-            <div class="right-controls">
-                <button class="control-btn" id="playlistToggleBtn" title="Show Playlist">
-                    <i class="fas fa-list"></i>
-                </button>
-            </div>
+            <div class="left-controls"><button class="control-btn" id="loopBtn" title="Toggle Loop"><i class="fas fa-repeat"></i></button></div>
+            <div class="center-controls"><button class="control-btn" id="prevBtn"><i class="fas fa-step-backward"></i></button><button class="control-btn" id="playPauseBtn"><i class="fas fa-play"></i></button><button class="control-btn" id="nextBtn"><i class="fas fa-step-forward"></i></button></div>
+            <div class="right-controls"><button class="control-btn" id="playlistToggleBtn" title="Show Playlist"><i class="fas fa-list"></i></button></div>
         </div>
     </div>
-
-    <footer>
-        &copy; 2024 CYBER_SYSTEMS | ACCESS_GRANTED
-    </footer>
+    <footer>&copy; 2024 CYBER_SYSTEMS | ACCESS_GRANTED</footer>
 
     <script>
-        // --- DATA & STATE ---
-        let playlist = [
-            {
-                name: "NIGHTCORE - ROCKEFELLER STREET",
-                url: 'https://raw.githubusercontent.com/saltysweeteasy/my-music/main/Nightcore%20-%20Rockefeller%20Street%20%5BhenzKOC78nw%5D.mp3',
-                type: 'url'
-            },
-
-            {
-                name: "GRAND ESCAPE PIANO(Radwimps) - MrPianoMinion",
-                url: 'https://raw.githubusercontent.com/saltysweeteasy/my-music/main/%E3%80%8AGrand%20Escape%E3%80%8BHardest%20Grand%20Piano%20Arrangement___%20_%20Weathering%20with%20You%20OST%20(%E5%A4%A9%E6%B0%97%E3%81%AE%E5%AD%90)%20%5Bk-cW_nSJcBk%5D.mp3',
-                type: 'url'
-            },
-
-            {
-                name: "TRACING THAT DREAM(Yoasobi) - Sungha Jung",
-                url: 'https://raw.githubusercontent.com/saltysweeteasy/my-music/main/(YOASOBI)%20Tracing%20That%20Dream%20(%E3%81%82%E3%81%AE%E5%A4%A2%E3%82%92%E3%81%AA%E3%81%9E%E3%81%A3%E3%81%A6)%20-%20Sungha%20Jung%20%5BQIP_ZdBhhGU%5D.mp3',
-                type: 'url'
-            },
-
-            {
-                name: "RACING INTO THE NIGHT(Yoasobi) - Sungha Jung",
-                url: 'https://raw.githubusercontent.com/saltysweeteasy/my-music/main/(YOASOBI)%20Racing%20into%20the%20Night%20-%20Sungha%20Jung%20%5BZg5fmnrRzbg%5D.mp3',
-                type: 'url'
-            },
-
-            {
-                name: "CRAZIER(Taylor Swift) - Arthur Miguel",
-                url: 'https://raw.githubusercontent.com/saltysweeteasy/my-music/main/Crazier%20(Taylor%20Swift)%20cover%20by%20Arthur%20Miguel%20%5BJuVrOBI--_g%5D.mp3',
-                type: 'url'
-            },
-            {
-                name: "PANGARAP LANG KITA - PAROKYA NI EDGAR",
-                url: 'https://raw.githubusercontent.com/saltysweeteasy/my-music/main/www.cabinet-avocat-cadet.fr%20-%20PANGARAP%20LANG%20KITA%20-%20Parokya%20Ni%20Edgar%20feat,%20Happy%20Sy%20(lyrics)%20(320%20KBps).mp3',
-                type: 'url'
-            },
-            {
-                name: "OUR HOUSE",
-                url: 'https://raw.githubusercontent.com/saltysweeteasy/my-music/main/Crosby,%20Stills,%20Nash%20&%20Young%20-%20OUR%20HOUSE%20(Joni%20Mitchell%20and%20Graham%20Nash%20fan%20video)%20%5BrrW7Mc3_wSc%5D.mp3',
-                type: 'url'
-            }
-        
+        // --- THEME & VIDEO MAPPINGS ---
+        // Default theme (Song 0 / Rockefeller Street) - stays as original
+        const songThemes = [
+            { primary: "#00f3ff", secondary: "#bc13fe", accent: "#00ff9d", video: "", matrixOpacity: 0.25 }, // ROCKEFELLER - default video (none, use matrix)
+            { primary: "#7b2cbf", secondary: "#9d4edd", accent: "#e0aaff", video: "https://videos.pexels.com/video-files/2103099/2103099-uhd_2560_1440_30fps.mp4", matrixOpacity: 0 }, // GRAND ESCAPE - two people sky falling
+            { primary: "#ffaa44", secondary: "#ff6b35", accent: "#ffd966", video: "https://raw.githubusercontent.com/saltysweeteasy/my-music/main/walking.mp4", matrixOpacity: 0 }, // TRACING THAT DREAM - stargazing
+            { primary: "#00cc88", secondary: "#00ffaa", accent: "#88ffcc", video: "https://videos.pexels.com/video-files/3255578/3255578-uhd_2560_1440_24fps.mp4", matrixOpacity: 0 }, // RACING INTO THE NIGHT
+            { primary: "#ff66b5", secondary: "#ff3388", accent: "#ffb3d9", video: "https://raw.githubusercontent.com/saltysweeteasy/my-music/main/sampay.mp4", matrixOpacity: 0.2 }, // CRAZIER - man inlove
+            { primary: "#ff884d", secondary: "#ff5500", accent: "#ffbb77", video: "", matrixOpacity: 0.25 },
+            { primary: "#66ffcc", secondary: "#33ffaa", accent: "#aaffee", video: "", matrixOpacity: 0.25 }
         ];
+
+        // Custom video mapping for specific tracks (overrides above)
+        const customVideos = {
+            1: "https://videos.pexels.com/video-files/2103099/2103099-uhd_2560_1440_30fps.mp4", // Grand Escape - sky falling
+            2: "https://raw.githubusercontent.com/saltysweeteasy/my-music/main/stargazing.mp4", // Tracing That Dream - stargazing
+            3: "https://raw.githubusercontent.com/saltysweeteasy/my-music/main/walking.mp4",
+            4: "https://raw.githubusercontent.com/saltysweeteasy/my-music/main/sampay.mp4"  // Crazier - romantic vibe
+
+        };
+
+        let playlist = [
+            { name: "NIGHTCORE - ROCKEFELLER STREET", url: 'https://raw.githubusercontent.com/saltysweeteasy/my-music/main/Nightcore%20-%20Rockefeller%20Street%20%5BhenzKOC78nw%5D.mp3' },
+            { name: "GRAND ESCAPE PIANO(Radwimps) - MrPianoMinion", url: 'https://raw.githubusercontent.com/saltysweeteasy/my-music/main/%E3%80%8AGrand%20Escape%E3%80%8BHardest%20Grand%20Piano%20Arrangement___%20_%20Weathering%20with%20You%20OST%20(%E5%A4%A9%E6%B0%97%E3%81%AE%E5%AD%90)%20%5Bk-cW_nSJcBk%5D.mp3' },
+            { name: "TRACING THAT DREAM(Yoasobi) - Sungha Jung", url: 'https://raw.githubusercontent.com/saltysweeteasy/my-music/main/(YOASOBI)%20Tracing%20That%20Dream%20(%E3%81%82%E3%81%AE%E5%A4%A2%E3%82%92%E3%81%AA%E3%81%9E%E3%81%A3%E3%81%A6)%20-%20Sungha%20Jung%20%5BQIP_ZdBhhGU%5D.mp3' },
+            { name: "RACING INTO THE NIGHT(Yoasobi) - Sungha Jung", url: 'https://raw.githubusercontent.com/saltysweeteasy/my-music/main/(YOASOBI)%20Racing%20into%20the%20Night%20-%20Sungha%20Jung%20%5BZg5fmnrRzbg%5D.mp3' },
+            { name: "CRAZIER(Taylor Swift) - Arthur Miguel", url: 'https://raw.githubusercontent.com/saltysweeteasy/my-music/main/Crazier%20(Taylor%20Swift)%20cover%20by%20Arthur%20Miguel%20%5BJuVrOBI--_g%5D.mp3' },
+            { name: "PANGARAP LANG KITA - PAROKYA NI EDGAR", url: 'https://raw.githubusercontent.com/saltysweeteasy/my-music/main/www.cabinet-avocat-cadet.fr%20-%20PANGARAP%20LANG%20KITA%20-%20Parokya%20Ni%20Edgar%20feat,%20Happy%20Sy%20(lyrics)%20(320%20KBps).mp3' },
+            { name: "OUR HOUSE", url: 'https://raw.githubusercontent.com/saltysweeteasy/my-music/main/Crosby,%20Stills,%20Nash%20&%20Young%20-%20OUR%20HOUSE%20(Joni%20Mitchell%20and%20Graham%20Nash%20fan%20video)%20%5BrrW7Mc3_wSc%5D.mp3' }
+        ];
+        
         let currentTrackIndex = 0;
         let isLooping = false;
         
-        // --- FIREBASE CONFIG & INIT ---
-        const firebaseConfig = {
-  apiKey: "AIzaSyBA-aIzlTIT34BGEEo8_n2bbSgdl-k_A1Q",
-  authDomain: "aboutme-5eb1f.firebaseapp.com",
-  databaseURL: "https://aboutme-5eb1f-default-rtdb.firebaseio.com",
-  projectId: "aboutme-5eb1f",
-  storageBucket: "aboutme-5eb1f.firebasestorage.app",
-  messagingSenderId: "464790179846",
-  appId: "1:464790179846:web:9e8b509c948be5d324b387",
-  measurementId: "G-0JBZS17FNS"
-};
-
-        // Initialize Firebase
+        const firebaseConfig = { apiKey: "AIzaSyBA-aIzlTIT34BGEEo8_n2bbSgdl-k_A1Q", authDomain: "aboutme-5eb1f.firebaseapp.com", databaseURL: "https://aboutme-5eb1f-default-rtdb.firebaseio.com", projectId: "aboutme-5eb1f", storageBucket: "aboutme-5eb1f.firebasestorage.app", messagingSenderId: "464790179846", appId: "1:464790179846:web:9e8b509c948be5d324b387" };
         let db;
-        try {
-            const app = firebase.initializeApp(firebaseConfig);
-            db = firebase.database();
-            console.log("🔥 Firebase connected successfully!");
-        } catch (error) {
-            console.error("❌ Firebase initialization error:", error);
-        }
+        try { const app = firebase.initializeApp(firebaseConfig); db = firebase.database(); console.log("Firebase connected"); } catch(e) { console.error(e); }
 
-        // --- MATRIX RAIN ---
+        // DOM Elements
+        const bgVideo = document.getElementById('bgVideo');
         const matrixCanvas = document.getElementById('matrixRain');
         const mCtx = matrixCanvas.getContext('2d');
-        function resizeMatrix() { 
-            matrixCanvas.width = window.innerWidth; 
-            matrixCanvas.height = window.innerHeight; 
-        }
-        window.addEventListener('resize', resizeMatrix); 
-        resizeMatrix();
+        const audio = new Audio(); audio.crossOrigin = "anonymous";
+        let audioCtx, analyser, source, mainGradient;
         
-        const chars = "01XYZΩΣΠ"; 
-        const drops = [];
-        function initMatrix() { 
-            for(let i=0; i<matrixCanvas.width/14; i++) drops[i] = 1; 
-        }
-        
-        function drawMatrix() {
-            mCtx.fillStyle = "rgba(5, 5, 5, 0.05)"; 
-            mCtx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
-            mCtx.font = "14px monospace";
-            for(let i=0; i<drops.length; i++) {
-                mCtx.fillStyle = (Math.random() > 0.5) ? "#00f3ff" : "#bc13fe";
-                mCtx.fillText(chars.charAt(Math.floor(Math.random()*chars.length)), i*14, drops[i]*14);
-                if(drops[i]*14 > matrixCanvas.height && Math.random() > 0.975) drops[i] = 0; 
-                drops[i]++;
-            }
-        }
-
-        // --- AUDIO SYSTEM ---
-        const audio = new Audio(); 
-        audio.crossOrigin = "anonymous";
-        let audioCtx, analyser, source;
-        let mainGradient; 
-
-        // UI Elements - Audio
         const playPauseBtn = document.getElementById('playPauseBtn');
         const loopBtn = document.getElementById('loopBtn');
         const prevBtn = document.getElementById('prevBtn');
@@ -963,63 +858,113 @@
         const playlistContainer = document.getElementById('playlistContainer');
         const playlistItemsDiv = document.getElementById('playlistItems');
         const playlistToggleBtn = document.getElementById('playlistToggleBtn');
-        
-        // UI Elements - Messaging
         const messageContainer = document.getElementById('messageContainer');
         const messageForm = document.getElementById('messageForm');
         const messageStatus = document.getElementById('messageStatus');
-        const senderNameInput = document.getElementById('senderName');
-        const messageBodyInput = document.getElementById('messageBody');
         const messageToggleBtn = document.getElementById('messageToggleBtn');
-
-        // UI Elements - About Me (NEW)
         const aboutContainer = document.getElementById('aboutContainer');
         const moreBtn = document.getElementById('moreBtn');
         const aboutCloseBtn = document.getElementById('aboutCloseBtn');
-
-        // Visualizer Canvases
         const visualCanvas = document.getElementById('visualizer');
         const vCtx = visualCanvas.getContext('2d');
         const profileCanvas = document.getElementById('profileVisualizer');
         const pCtx = profileCanvas.getContext('2d');
 
-        // --- INITIALIZATION ---
-        document.getElementById('start-screen').addEventListener('click', function() {
-            this.style.opacity = '0'; 
-            setTimeout(() => this.remove(), 800);
+        // --- DYNAMIC THEME & VIDEO APPLICATION ---
+        function applyThemeAndVideo(index) {
+            const theme = songThemes[index % songThemes.length];
+            if (!theme) return;
             
-            initMatrix(); 
-            setInterval(drawMatrix, 50);
-            setupAudioContext();
+            // Apply CSS variable colors
+            document.documentElement.style.setProperty('--neon-blue', theme.primary);
+            document.documentElement.style.setProperty('--neon-pink', theme.secondary);
+            document.documentElement.style.setProperty('--neon-green', theme.accent);
             
-            // Trigger Animations
-            document.getElementById('profileSection').classList.add('visible');
-            document.getElementById('musicSection').classList.add('visible');
-            document.getElementById('moreBtn').classList.add('visible');
-            playlistContainer.classList.add('visible');
-            messageToggleBtn.classList.add('visible');
+            // Matrix rain opacity
+            const matrixElem = document.querySelector('.matrix-rain');
+            if (matrixElem) matrixElem.style.opacity = theme.matrixOpacity;
             
-            // Load playlist
-            renderPlaylist();
-            currentTrackIndex = 0;
-            loadTrack(0);
+            // Update profile elements
+            const profilePic = document.querySelector('.profile-pic');
+            if (profilePic) {
+                profilePic.style.borderColor = theme.primary;
+                profilePic.style.boxShadow = `0 0 15px ${theme.primary}, inset 0 0 10px ${theme.secondary}`;
+            }
+            const verifiedImg = document.querySelector('.verified-img');
+            if (verifiedImg) verifiedImg.style.filter = `drop-shadow(0 0 3px ${theme.primary})`;
+            const nameEl = document.querySelector('.name');
+            if (nameEl) nameEl.style.textShadow = `2px 2px 0 ${theme.secondary}, -2px -2px 0 ${theme.primary}`;
+            const titleEl = document.querySelector('.title');
+            if (titleEl) {
+                titleEl.style.color = theme.primary;
+                titleEl.style.textShadow = `0 0 8px ${theme.primary}`;
+            }
+            nowPlayingTitle.style.color = theme.primary;
+            nowPlayingTitle.style.textShadow = `0 0 5px ${theme.primary}`;
             
-            // Auto-play after a delay
-            setTimeout(() => {
-                playAudio();
-            }, 1500);
-        });
-
-        function createMainGradient() {
+            // Update video background
+            let videoUrl = theme.video;
+            // Override with custom videos for specific tracks
+            if (customVideos[index]) videoUrl = customVideos[index];
+            
+            if (videoUrl && videoUrl !== "") {
+                bgVideo.style.opacity = "0.4";
+                bgVideo.src = videoUrl;
+                bgVideo.load();
+                bgVideo.play().catch(e => console.log("Video autoplay prevented:", e));
+            } else {
+                // No video, fade out current video
+                bgVideo.style.opacity = "0";
+                setTimeout(() => {
+                    if (bgVideo.src && !customVideos[index] && !songThemes[index]?.video) {
+                        bgVideo.src = "";
+                    }
+                }, 500);
+            }
+            
+            // Update main visualizer gradient colors to match theme
+            if (mainGradient && vCtx) {
+                createMainGradientWithTheme(theme.primary, theme.secondary);
+            }
+        }
+        
+        function createMainGradientWithTheme(primary, secondary) {
+            if (!vCtx) return;
             mainGradient = vCtx.createLinearGradient(0, 0, visualCanvas.width, 0);
-            mainGradient.addColorStop(0.0, '#00f3ff'); 
-            mainGradient.addColorStop(0.2, '#bc13fe'); 
-            mainGradient.addColorStop(0.4, '#ff0055'); 
-            mainGradient.addColorStop(0.6, '#ff9900'); 
-            mainGradient.addColorStop(0.8, '#ffff00'); 
-            mainGradient.addColorStop(1.0, '#00ff99'); 
+            mainGradient.addColorStop(0.0, primary);
+            mainGradient.addColorStop(0.3, secondary);
+            mainGradient.addColorStop(0.6, '#ff66cc');
+            mainGradient.addColorStop(1.0, primary);
+        }
+        
+        function createMainGradient() {
+            const primary = getComputedStyle(document.documentElement).getPropertyValue('--neon-blue').trim() || "#00f3ff";
+            const secondary = getComputedStyle(document.documentElement).getPropertyValue('--neon-pink').trim() || "#bc13fe";
+            createMainGradientWithTheme(primary, secondary);
         }
 
+        // --- MATRIX RAIN ---
+        function resizeMatrix() { matrixCanvas.width = window.innerWidth; matrixCanvas.height = window.innerHeight; }
+        window.addEventListener('resize', resizeMatrix);
+        resizeMatrix();
+        const chars = "01XYZΩΣΠ";
+        const drops = [];
+        function initMatrix() { for(let i=0; i<matrixCanvas.width/14; i++) drops[i] = 1; }
+        function drawMatrix() {
+            mCtx.fillStyle = "rgba(5, 5, 5, 0.05)";
+            mCtx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
+            mCtx.font = "14px monospace";
+            const primary = getComputedStyle(document.documentElement).getPropertyValue('--neon-blue').trim() || "#00f3ff";
+            const secondary = getComputedStyle(document.documentElement).getPropertyValue('--neon-pink').trim() || "#bc13fe";
+            for(let i=0; i<drops.length; i++) {
+                mCtx.fillStyle = (Math.random() > 0.5) ? primary : secondary;
+                mCtx.fillText(chars.charAt(Math.floor(Math.random()*chars.length)), i*14, drops[i]*14);
+                if(drops[i]*14 > matrixCanvas.height && Math.random() > 0.975) drops[i] = 0;
+                drops[i]++;
+            }
+        }
+
+        // --- AUDIO SETUP ---
         function setupAudioContext() {
             if(!audioCtx) {
                 audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -1027,76 +972,58 @@
                 source = audioCtx.createMediaElementSource(audio);
                 source.connect(analyser);
                 analyser.connect(audioCtx.destination);
-                analyser.fftSize = 512; 
+                analyser.fftSize = 512;
                 analyser.smoothingTimeConstant = 0.8;
-                
                 resizeVisualizers();
-                createMainGradient(); 
+                createMainGradient();
                 requestAnimationFrame(drawMainVisualizer);
                 requestAnimationFrame(drawProfileVisualizer);
             } else if(audioCtx.state === 'suspended') audioCtx.resume();
         }
 
         function resizeVisualizers() {
-            visualCanvas.width = visualCanvas.offsetWidth; 
+            visualCanvas.width = visualCanvas.offsetWidth;
             visualCanvas.height = visualCanvas.offsetHeight;
-            profileCanvas.width = profileCanvas.offsetWidth; 
+            profileCanvas.width = profileCanvas.offsetWidth;
             profileCanvas.height = profileCanvas.offsetHeight;
-            if(audioCtx) createMainGradient(); 
+            if(audioCtx) createMainGradient();
         }
         window.addEventListener('resize', resizeVisualizers);
 
-        // --- PLAYLIST LOGIC ---
         function renderPlaylist() {
             playlistItemsDiv.innerHTML = "";
             playlist.forEach((track, index) => {
                 const div = document.createElement('div');
                 div.className = `playlist-item ${index === currentTrackIndex ? 'active' : ''}`;
-                div.textContent = `${index + 1}. ${track.name.replace('.mp3', '')}`; 
-                div.onclick = () => { 
-                    currentTrackIndex = index; 
-                    loadTrack(index); 
-                    playAudio(); 
-                };
+                div.textContent = `${index + 1}. ${track.name.replace('.mp3', '')}`;
+                div.onclick = () => { currentTrackIndex = index; loadTrack(index); playAudio(); };
                 playlistItemsDiv.appendChild(div);
             });
         }
 
-        // Playlist toggle
-        playlistToggleBtn.onclick = () => {
-            playlistContainer.classList.toggle('visible');
-        };
+        playlistToggleBtn.onclick = () => { playlistContainer.classList.toggle('visible'); };
 
         function loadTrack(index) {
             if(index < 0 || index >= playlist.length) return;
             const track = playlist[index];
-            
             audio.onerror = function(e) {
-                console.error(`Playback Error on ${track.name}:`, e.target.error.code, e.target.error.message);
+                console.error(`Error on ${track.name}`);
                 nowPlayingTitle.textContent = `ERROR: Cannot load ${track.name}`;
-                
-                if (currentTrackIndex === index) { 
+                if (currentTrackIndex === index) {
                     setTimeout(() => {
-                        console.log("Skipping to next track due to error.");
                         currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
-                        loadTrack(currentTrackIndex); 
+                        loadTrack(currentTrackIndex);
                         playAudio();
-                    }, 4000); // <-- Increased delay for better visibility of the error
+                    }, 4000);
                 }
             };
-            
-            audio.onloadstart = function() {
-                nowPlayingTitle.textContent = `LOADING: ${track.name}`;
-            };
-            
-            audio.oncanplay = function() {
-                console.log(`Track loaded successfully: ${track.name}`);
-                audio.onerror = null;
-            };
-
+            audio.onloadstart = function() { nowPlayingTitle.textContent = `LOADING: ${track.name}`; };
+            audio.oncanplay = function() { console.log(`Loaded: ${track.name}`); audio.onerror = null; };
             audio.src = track.url;
             renderPlaylist();
             audio.load();
+            // Apply theme and video immediately when track loads
+            applyThemeAndVideo(index);
         }
 
         function playAudio() {
@@ -1111,251 +1038,130 @@
             });
         }
 
-        // --- CONTROLS ---
-        playPauseBtn.onclick = () => {
-            if(audio.paused) {
-                playAudio();
-            } else { 
-                audio.pause(); 
-                playPauseBtn.innerHTML = '<i class="fas fa-play"></i>'; 
-            }
-        };
-
-        loopBtn.onclick = () => {
-            isLooping = !isLooping;
-            loopBtn.classList.toggle('active');
-            loopBtn.innerHTML = isLooping ? '<i class="fas fa-repeat"></i> 1' : '<i class="fas fa-repeat"></i>';
-        };
-
-        nextBtn.onclick = () => {
-            currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
-            loadTrack(currentTrackIndex); 
-            playAudio();
-        };
-
-        prevBtn.onclick = () => {
-            currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
-            loadTrack(currentTrackIndex); 
-            playAudio();
-        };
-
-        // Auto Next / Loop Logic
-        audio.onended = () => {
-            if(isLooping) {
-                audio.currentTime = 0; 
-                playAudio();
-            } else {
-                nextBtn.click();
-            }
-        };
-
-        // --- NEW: MORE ABOUT ME LOGIC ---
-        moreBtn.onclick = (e) => {
-            e.preventDefault();
-            e.stopPropagation(); // <-- FIX: Stops click from reaching the document listener
-            aboutContainer.classList.add('visible');
-            // Hide message UI element for focus, but keep playlist visible
-            messageContainer.classList.remove('visible');
-        };
-
-        aboutCloseBtn.onclick = () => {
-            aboutContainer.classList.remove('visible');
-            // Restore other UI elements
-            playlistContainer.classList.add('visible');
-            messageToggleBtn.classList.add('visible');
-        };
+        playPauseBtn.onclick = () => { if(audio.paused) playAudio(); else { audio.pause(); playPauseBtn.innerHTML = '<i class="fas fa-play"></i>'; } };
+        loopBtn.onclick = () => { isLooping = !isLooping; loopBtn.classList.toggle('active'); loopBtn.innerHTML = isLooping ? '<i class="fas fa-repeat"></i> 1' : '<i class="fas fa-repeat"></i>'; };
+        nextBtn.onclick = () => { currentTrackIndex = (currentTrackIndex + 1) % playlist.length; loadTrack(currentTrackIndex); playAudio(); };
+        prevBtn.onclick = () => { currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length; loadTrack(currentTrackIndex); playAudio(); };
+        audio.onended = () => { if(isLooping) { audio.currentTime = 0; playAudio(); } else nextBtn.click(); };
         
-        // Close about container when clicking outside (and not on the button itself)
-        document.addEventListener('click', (e) => {
-            if (aboutContainer.classList.contains('visible') && 
-                !aboutContainer.contains(e.target) && 
-                e.target !== moreBtn) {
-                aboutContainer.classList.remove('visible');
-            }
-        });
-
-
-        // --- MESSAGE SYSTEM ---
-        messageToggleBtn.onclick = (e) => {
-            e.preventDefault();
-            messageContainer.classList.toggle('visible');
-            
-            if (messageContainer.classList.contains('visible')) {
-                messageStatus.textContent = '';
-                messageStatus.style.color = 'var(--neon-pink)';
-                senderNameInput.focus();
-                // Ensure About Me is closed
-                aboutContainer.classList.remove('visible');
-            }
-        };
-
-        // Close message container when clicking outside
-        document.addEventListener('click', (e) => {
-            if (messageContainer.classList.contains('visible') && 
-                !messageContainer.contains(e.target) && 
-                e.target !== messageToggleBtn) {
-                messageContainer.classList.remove('visible');
-            }
-        });
-
-        // Message Form Submission
-        messageForm.addEventListener('submit', sendMessage);
-
-        function sendMessage(e) {
-            e.preventDefault();
-            
-            if (!db) {
-                showStatus("❌ DATABASE OFFLINE: Firebase not connected", 'red');
-                console.error("Database not initialized");
-                return;
-            }
-
-            const sender = senderNameInput.value.trim() || "ANONYMOUS_AGENT";
-            const message = messageBodyInput.value.trim();
-            
-            if (!message) {
-                showStatus("⚠️ PAYLOAD EMPTY: Enter a message", 'var(--neon-pink)');
-                return;
-            }
-            
-            showStatus("📡 TRANSMITTING DATA...", 'var(--neon-green)');
-            
-            // Create message object
-            const newMessage = {
-                sender: sender,
-                message: message,
-                timestamp: Date.now(),
-                date: new Date().toISOString()
-            };
-            
-            // Push to Firebase
-            db.ref('messages').push(newMessage)
-                .then(() => {
-                    showStatus("✅ TRANSMISSION SUCCESSFUL: Message received!", 'var(--neon-green)');
-                    
-                    // Clear form
-                    senderNameInput.value = '';
-                    messageBodyInput.value = '';
-                    
-                    // Auto-close after success
-                    setTimeout(() => {
-                        messageContainer.classList.remove('visible');
-                        messageStatus.textContent = '';
-                    }, 2000);
-                })
-                .catch((error) => {
-                    console.error("Firebase error:", error);
-                    showStatus(`❌ TRANSMISSION FAILED: ${error.message}`, 'red');
-                    
-                    if (error.code === 'PERMISSION_DENIED') {
-                        showStatus("❌ PERMISSION DENIED: Check Firebase Rules", 'red');
-                    }
-                });
-        }
-
-        function showStatus(message, color) {
-            messageStatus.textContent = message;
-            messageStatus.style.color = color;
-            messageStatus.style.textShadow = `0 0 10px ${color}`;
-        }
-        
-        // --- DRAWING FUNCTIONS ---
-        function drawMainVisualizer() {
-            requestAnimationFrame(drawMainVisualizer);
-            if (!analyser) return;
-
-            const bufferLength = analyser.frequencyBinCount;
-            const dataArray = new Uint8Array(bufferLength);
-            analyser.getByteFrequencyData(dataArray);
-            
-            vCtx.clearRect(0, 0, visualCanvas.width, visualCanvas.height);
-            vCtx.fillStyle = mainGradient; 
-
-            const bars = 200; 
-            const barW = visualCanvas.width / bars;
-            const centerY = visualCanvas.height / 2;
-            const maxH = visualCanvas.height / 2;
-
-            let sum = 0;
-            for(let i = 0; i < dataArray.length; i++) { sum += dataArray[i]; }
-            const averageVolume = sum / dataArray.length; 
-            
-            const rawVolumeEffect = (averageVolume / 255) * maxH * 1.5;
-            const volumeEffect = rawVolumeEffect > 30 ? rawVolumeEffect * 0.2 : rawVolumeEffect;
-            const baseHeight = 5;
-
-            for(let i=0; i<bars; i++) {
-                const wave = Math.sin(i * 0.2 + Date.now()/200) * 10; 
-                let h = baseHeight + volumeEffect + wave; 
-                h = Math.max(5, Math.min(h, maxH - 2)); 
-
-                vCtx.beginPath();
-                vCtx.roundRect(i * barW, centerY - h, barW - 2, h, 4);
-                vCtx.roundRect(i * barW, centerY, barW - 2, h, 4);
-                vCtx.fill();
-            }
-        }
-
-        function drawProfileVisualizer() {
-            requestAnimationFrame(drawProfileVisualizer);
-            if (!analyser) return;
-            
-            const bufferLength = analyser.frequencyBinCount;
-            const dataArray = new Uint8Array(bufferLength);
-            analyser.getByteFrequencyData(dataArray);
-
-            pCtx.clearRect(0, 0, profileCanvas.width, profileCanvas.height);
-
-            const cx = profileCanvas.width / 2;
-            const cy = profileCanvas.height / 2;
-            
-            const radius = 55; 
-            const bars = 60;
-            const step = (Math.PI * 2) / bars;
-            const time = Date.now() / 300;
-
-            let sum = 0;
-            for(let i = 0; i < dataArray.length; i++) { sum += dataArray[i]; }
-            const averageVolume = sum / dataArray.length; 
-
-            const baseBarLength = 10; 
-            const volumeEffect = (averageVolume / 255) * 15; 
-
-            for(let i=0; i<bars; i++) {
-                const wave = Math.sin(i * 0.5 + time) * 5; 
-                let barLen = baseBarLength + volumeEffect + wave; 
-                barLen = Math.max(5, Math.min(barLen, 40)); 
-
-                pCtx.strokeStyle = `hsl(${i * 5 + time * 50}, 100%, 50%)`;
-                pCtx.lineWidth = 3;
-                pCtx.lineCap = 'round';
-
-                pCtx.save();
-                pCtx.translate(cx, cy);
-                pCtx.rotate(i * step);
-                
-                pCtx.beginPath();
-                pCtx.moveTo(0, radius);
-                pCtx.lineTo(0, radius + barLen);
-                pCtx.stroke();
-                
-                pCtx.restore();
-            }
-        }
-
-        // Seek Bar
         audio.ontimeupdate = () => {
             seekSlider.value = (audio.currentTime / audio.duration) * 100 || 0;
             currTime.textContent = fmtTime(audio.currentTime);
             totalDur.textContent = fmtTime(audio.duration || 0);
         };
         seekSlider.oninput = (e) => audio.currentTime = (e.target.value / 100) * audio.duration;
-        function fmtTime(s) { 
-            const minutes = Math.floor(s / 60);
-            const seconds = Math.floor(s % 60);
-            return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        function fmtTime(s) { const m = Math.floor(s/60); const sec = Math.floor(s%60); return `${m}:${sec<10?'0':''}${sec}`; }
+
+        // --- VISUALIZERS ---
+        function drawMainVisualizer() {
+            requestAnimationFrame(drawMainVisualizer);
+            if (!analyser) return;
+            const bufferLength = analyser.frequencyBinCount;
+            const dataArray = new Uint8Array(bufferLength);
+            analyser.getByteFrequencyData(dataArray);
+            vCtx.clearRect(0, 0, visualCanvas.width, visualCanvas.height);
+            vCtx.fillStyle = mainGradient;
+            const bars = 200;
+            const barW = visualCanvas.width / bars;
+            const centerY = visualCanvas.height / 2;
+            let sum = 0; for(let i=0; i<dataArray.length; i++) sum += dataArray[i];
+            const averageVolume = sum / dataArray.length;
+            const volumeEffect = (averageVolume / 255) * 80;
+            for(let i=0; i<bars; i++) {
+                let h = 5 + volumeEffect + Math.sin(i * 0.2 + Date.now()/200) * 10;
+                h = Math.max(5, Math.min(h, centerY - 10));
+                vCtx.beginPath();
+                vCtx.roundRect(i * barW, centerY - h, barW - 2, h, 4);
+                vCtx.roundRect(i * barW, centerY, barW - 2, h, 4);
+                vCtx.fill();
+            }
+        }
+        
+        function drawProfileVisualizer() {
+            requestAnimationFrame(drawProfileVisualizer);
+            if (!analyser) return;
+            const dataArray = new Uint8Array(analyser.frequencyBinCount);
+            analyser.getByteFrequencyData(dataArray);
+            pCtx.clearRect(0, 0, profileCanvas.width, profileCanvas.height);
+            const cx = profileCanvas.width/2, cy = profileCanvas.height/2;
+            const radius = 55, bars = 60;
+            let sum = 0; for(let i=0; i<dataArray.length; i++) sum += dataArray[i];
+            const avgVol = sum / dataArray.length;
+            const volumeEffect = (avgVol / 255) * 15;
+            for(let i=0; i<bars; i++) {
+                let barLen = 10 + volumeEffect + Math.sin(i * 0.5 + Date.now()/300) * 5;
+                barLen = Math.max(5, Math.min(barLen, 40));
+                pCtx.strokeStyle = `hsl(${i * 5 + Date.now()/20}, 100%, 60%)`;
+                pCtx.lineWidth = 3;
+                pCtx.save();
+                pCtx.translate(cx, cy);
+                pCtx.rotate(i * (Math.PI * 2 / bars));
+                pCtx.beginPath();
+                pCtx.moveTo(0, radius);
+                pCtx.lineTo(0, radius + barLen);
+                pCtx.stroke();
+                pCtx.restore();
+            }
         }
 
+        // --- INITIALIZATION ---
+        document.getElementById('start-screen').addEventListener('click', function() {
+            this.style.opacity = '0';
+            setTimeout(() => this.remove(), 800);
+            initMatrix();
+            setInterval(drawMatrix, 50);
+            setupAudioContext();
+            document.getElementById('profileSection').classList.add('visible');
+            document.getElementById('musicSection').classList.add('visible');
+            document.getElementById('moreBtn').classList.add('visible');
+            playlistContainer.classList.add('visible');
+            messageToggleBtn.classList.add('visible');
+            renderPlaylist();
+            currentTrackIndex = 0;
+            loadTrack(0);
+            setTimeout(() => { playAudio(); }, 1500);
+        });
+
+        // Modal logic (unchanged)
+        moreBtn.onclick = (e) => { e.preventDefault(); e.stopPropagation(); aboutContainer.classList.add('visible'); messageContainer.classList.remove('visible'); };
+        aboutCloseBtn.onclick = () => { aboutContainer.classList.remove('visible'); };
+        document.addEventListener('click', (e) => { if(aboutContainer.classList.contains('visible') && !aboutContainer.contains(e.target) && e.target !== moreBtn) aboutContainer.classList.remove('visible'); });
+        messageToggleBtn.onclick = (e) => { e.preventDefault(); messageContainer.classList.toggle('visible'); if(messageContainer.classList.contains('visible')) { messageStatus.textContent = ''; senderNameInput.focus(); aboutContainer.classList.remove('visible'); } };
+        document.addEventListener('click', (e) => { if(messageContainer.classList.contains('visible') && !messageContainer.contains(e.target) && e.target !== messageToggleBtn) messageContainer.classList.remove('visible'); });
+        
+        messageForm.addEventListener('submit', sendMessage);
+        function sendMessage(e) {
+            e.preventDefault();
+            if (!db) { showStatus("DATABASE OFFLINE", 'red'); return; }
+            const sender = senderNameInput.value.trim() || "ANONYMOUS_AGENT";
+            const message = messageBodyInput.value.trim();
+            if (!message) { showStatus("EMPTY MESSAGE", 'var(--neon-pink)'); return; }
+            showStatus("TRANSMITTING...", 'var(--neon-green)');
+            db.ref('messages').push({ sender, message, timestamp: Date.now() }).then(() => {
+                showStatus("TRANSMISSION SUCCESSFUL!", 'var(--neon-green)');
+                senderNameInput.value = ''; messageBodyInput.value = '';
+                setTimeout(() => messageContainer.classList.remove('visible'), 2000);
+            }).catch(err => showStatus(`FAILED: ${err.message}`, 'red'));
+        }
+        function showStatus(msg, color) { messageStatus.textContent = msg; messageStatus.style.color = color; messageStatus.style.textShadow = `0 0 10px ${color}`; }
+        
+        // Helper for roundRect
+        if (!CanvasRenderingContext2D.prototype.roundRect) {
+            CanvasRenderingContext2D.prototype.roundRect = function(x, y, w, h, r) {
+                if (w < 2 * r) r = w / 2;
+                if (h < 2 * r) r = h / 2;
+                this.moveTo(x+r, y);
+                this.lineTo(x+w-r, y);
+                this.quadraticCurveTo(x+w, y, x+w, y+r);
+                this.lineTo(x+w, y+h-r);
+                this.quadraticCurveTo(x+w, y+h, x+w-r, y+h);
+                this.lineTo(x+r, y+h);
+                this.quadraticCurveTo(x, y+h, x, y+h-r);
+                this.lineTo(x, y+r);
+                this.quadraticCurveTo(x, y, x+r, y);
+                return this;
+            };
+        }
     </script>
 </body>
 </html>
