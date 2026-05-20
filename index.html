@@ -737,7 +737,7 @@
         <div class="profile-section" id="profileSection">
             <div class="profile-wrapper">
                 <canvas id="profileVisualizer"></canvas>
-                <img src="andrew.png" alt="Andrew" class="profile-pic">
+                <img src="andrew2.jpg" alt="Profile Picture" class="profile-pic">
             </div>
             <div class="name-wrapper">
                 <h1 class="name">ANDREW SANTIAGO</h1>
@@ -806,33 +806,36 @@
         // Default theme (Song 0 / Rockefeller Street) - stays as original
         const songThemes = [
             { primary: "#00f3ff", secondary: "#bc13fe", accent: "#00ff9d", video: "", matrixOpacity: 0.25 }, // ROCKEFELLER - default video (none, use matrix)
-            { primary: "#7b2cbf", secondary: "#9d4edd", accent: "#e0aaff", video: "https://videos.pexels.com/video-files/2103099/2103099-uhd_2560_1440_30fps.mp4", matrixOpacity: 0 }, // GRAND ESCAPE - two people sky falling
-            { primary: "#ffaa44", secondary: "#ff6b35", accent: "#ffd966", video: "https://raw.githubusercontent.com/saltysweeteasy/my-music/main/walking.mp4", matrixOpacity: 0 }, // TRACING THAT DREAM - stargazing
-            { primary: "#00cc88", secondary: "#00ffaa", accent: "#88ffcc", video: "https://videos.pexels.com/video-files/3255578/3255578-uhd_2560_1440_24fps.mp4", matrixOpacity: 0 }, // RACING INTO THE NIGHT
-            { primary: "#ff66b5", secondary: "#ff3388", accent: "#ffb3d9", video: "https://raw.githubusercontent.com/saltysweeteasy/my-music/main/sampay.mp4", matrixOpacity: 0.2 }, // CRAZIER - man inlove
-            { primary: "#ff884d", secondary: "#ff5500", accent: "#ffbb77", video: "", matrixOpacity: 0.25 },
-            { primary: "#66ffcc", secondary: "#33ffaa", accent: "#aaffee", video: "", matrixOpacity: 0.25 }
+            { primary: "#7b2cbf", secondary: "#9d4edd", accent: "#e0aaff", video: "", matrixOpacity: 0 }, // GRAND ESCAPE - two people sky falling
+            { primary: "#ffaa44", secondary: "#ff6b35", accent: "#ffd966", video: "", matrixOpacity: 0 }, // TRACING THAT DREAM - stargazing
+            { primary: "#00cc88", secondary: "#00ffaa", accent: "#88ffcc", video: "", matrixOpacity: 0 }, // RACING INTO THE NIGHT
+            { primary: "#ff66b5", secondary: "#ff3388", accent: "#ffb3d9", video: "", matrixOpacity: 0.0 }, // CRAZIER - man inlove
+            { primary: "#ff884d", secondary: "#ff5500", accent: "#ffbb77", video: "", matrixOpacity: 0.0},
+            { primary: "#66ffcc", secondary: "#33ffaa", accent: "#aaffee", video: "", matrixOpacity: 0.0}
         ];
 
-        // Custom video mapping for specific tracks (overrides above)
+        // Custom video mapping for specific tracks (overrides the default theme video)
         const customVideos = {
-            1: "https://videos.pexels.com/video-files/2103099/2103099-uhd_2560_1440_30fps.mp4", // Grand Escape - sky falling
-            2: "https://raw.githubusercontent.com/saltysweeteasy/my-music/main/stargazing.mp4", // Tracing That Dream - stargazing
-            3: "https://raw.githubusercontent.com/saltysweeteasy/my-music/main/walking.mp4",
-            4: "https://raw.githubusercontent.com/saltysweeteasy/my-music/main/sampay.mp4"  // Crazier - romantic vibe
-
+            "our-house": "https://raw.githubusercontent.com/saltysweeteasy/my-music/main/treehouse.mp4",
+            "pangarap-lang-kita": "https://raw.githubusercontent.com/saltysweeteasy/my-music/main/crowd%20staring.mp4",
+            "grand-escape": "https://raw.githubusercontent.com/saltysweeteasy/my-music/main/skyfall.mp4", // Grand Escape - sky falling
+            "tracing-that-dream": "https://raw.githubusercontent.com/saltysweeteasy/my-music/main/stargazing.mp4", // Tracing That Dream - stargazing
+            "racing-into-the-night": "https://raw.githubusercontent.com/saltysweeteasy/my-music/main/walking.mp4", // Racing Into The Night
+            "crazier": "https://raw.githubusercontent.com/saltysweeteasy/my-music/main/sampay.mp4",
+            "Exception": "https://raw.githubusercontent.com/saltysweeteasy/my-music/main/drivecarefree.mp4"
         };
 
         let playlist = [
-            { name: "NIGHTCORE - ROCKEFELLER STREET", url: 'https://raw.githubusercontent.com/saltysweeteasy/my-music/main/Nightcore%20-%20Rockefeller%20Street%20%5BhenzKOC78nw%5D.mp3' },
-            { name: "GRAND ESCAPE PIANO(Radwimps) - MrPianoMinion", url: 'https://raw.githubusercontent.com/saltysweeteasy/my-music/main/%E3%80%8AGrand%20Escape%E3%80%8BHardest%20Grand%20Piano%20Arrangement___%20_%20Weathering%20with%20You%20OST%20(%E5%A4%A9%E6%B0%97%E3%81%AE%E5%AD%90)%20%5Bk-cW_nSJcBk%5D.mp3' },
-            { name: "TRACING THAT DREAM(Yoasobi) - Sungha Jung", url: 'https://raw.githubusercontent.com/saltysweeteasy/my-music/main/(YOASOBI)%20Tracing%20That%20Dream%20(%E3%81%82%E3%81%AE%E5%A4%A2%E3%82%92%E3%81%AA%E3%81%9E%E3%81%A3%E3%81%A6)%20-%20Sungha%20Jung%20%5BQIP_ZdBhhGU%5D.mp3' },
-            { name: "RACING INTO THE NIGHT(Yoasobi) - Sungha Jung", url: 'https://raw.githubusercontent.com/saltysweeteasy/my-music/main/(YOASOBI)%20Racing%20into%20the%20Night%20-%20Sungha%20Jung%20%5BZg5fmnrRzbg%5D.mp3' },
-            { name: "CRAZIER(Taylor Swift) - Arthur Miguel", url: 'https://raw.githubusercontent.com/saltysweeteasy/my-music/main/Crazier%20(Taylor%20Swift)%20cover%20by%20Arthur%20Miguel%20%5BJuVrOBI--_g%5D.mp3' },
-            { name: "PANGARAP LANG KITA - PAROKYA NI EDGAR", url: 'https://raw.githubusercontent.com/saltysweeteasy/my-music/main/www.cabinet-avocat-cadet.fr%20-%20PANGARAP%20LANG%20KITA%20-%20Parokya%20Ni%20Edgar%20feat,%20Happy%20Sy%20(lyrics)%20(320%20KBps).mp3' },
-            { name: "OUR HOUSE", url: 'https://raw.githubusercontent.com/saltysweeteasy/my-music/main/Crosby,%20Stills,%20Nash%20&%20Young%20-%20OUR%20HOUSE%20(Joni%20Mitchell%20and%20Graham%20Nash%20fan%20video)%20%5BrrW7Mc3_wSc%5D.mp3' }
+            { id: "Exception", name: "The Only Exception", url: 'https://raw.githubusercontent.com/saltysweeteasy/my-music/main/Paramore%20-%20The%20Only%20Exception%20_%20Lyrics%20%5BnXjhSMWBE30%5D%20(1).mp3'},
+            { id: "rockefeller", name: "NIGHTCORE - ROCKEFELLER STREET", url: 'https://raw.githubusercontent.com/saltysweeteasy/my-music/main/Nightcore%20-%20Rockefeller%20Street%20%5BhenzKOC78nw%5D.mp3' },
+            { id: "grand-escape", name: "GRAND ESCAPE PIANO(Radwimps) - MrPianoMinion", url: 'https://raw.githubusercontent.com/saltysweeteasy/my-music/main/%E3%80%8AGrand%20Escape%E3%80%8BHardest%20Grand%20Piano%20Arrangement___%20_%20Weathering%20with%20You%20OST%20(%E5%A4%A9%E6%B0%97%E3%81%AE%E5%AD%90)%20%5Bk-cW_nSJcBk%5D.mp3' },
+            { id: "tracing-that-dream", name: "TRACING THAT DREAM(Yoasobi) - Sungha Jung", url: 'https://raw.githubusercontent.com/saltysweeteasy/my-music/main/(YOASOBI)%20Tracing%20That%20Dream%20(%E3%81%82%E3%81%AE%E5%A4%A2%E3%82%92%E3%81%AA%E3%81%9E%E3%81%A3%E3%81%A6)%20-%2  Sungha Jung', url: 'https://raw.githubusercontent.com/saltysweeteasy/my-music/main/(YOASOBI)%20Racing %2  Sungha Jung', url: 'https://raw.githubusercontent.com/saltysweeteasy/my-music/main/(YOASOBI)%2  Sungha Jung', url: 'https://raw.githubusercontent.com/saltysweeteasy/my-music/main/(YOASOBI)%２  Sungha Jung', url: 'https://raw.githubusercontent.com/saltysweeteasy/my-music/main/(YOASOBI)%２  Sungha Jung', url: 'https://raw.githubusercontent.com/saltysweeteasy/my-music/main/(YOASOBI)%２  Sungha Jung', url: 'https://raw.githubusercontent.com/saltysweeteasy/my-music/main/(YOASOBI)%２  Sungha Jung', url: 'https://raw.githubusercontent.com/saltysweeteasy/my-music/main/(YOASOBI)%２  Sungha Jung', url: 'https://raw.githubusercontent.com/saltysweeteasy/my-music/main/(YOASOBI)%２  Sungha Jung', url: 'https://raw.githubusercontent.com/saltysweeteasy/my-music/main/(YOASOBI)%２  Sungha Jung', url: 'https://raw.githubusercontent.com/saltysweeteasy/my-music/main/(YOASOBI)%２  Sungha Jung', url: 'https://raw.githubusercontent.com/saltysweeteasy/my-music/main/(YOASOBI)%２  Sungha Jung', url: 'https://raw.githubusercontent.com/saltysweeteasy/my-music/main/(YOASOBI)%２  Sungha Jung', url: 'https://raw.githubusercontent.com/saltysweeteasy/my-music/main/(YOASOBI)%２  Sungha Jung', url: 'https://raw.githubusercontent.com/saltysweeteasy/my-music/main/(YOASOBI)%２  Sungha Jung', url: 'https://raw.githubusercontent.com/saltysweeteasy/my-music/main/(YOASOBI)%２  Sungha Jung', url: 'https://raw.githubusercontent.com/saltysweeteasy/my-music/main/(YOASOBI)%２  Sungha Jung', url: 'https://raw.githubusercontent.com/saltysweeteasy/my-music/main/(YOASOBI)%２  Sungha Jung', url: 'https://raw.githubusercontent.com/saltysweeteasy/my-music/main/(YOASOBI)%２  Sungha Jung', url: 'https://raw.githubusercontent.com/saltysweeteasy/my-mUSIC/main/(YOASOBI)%２  Sungha Jung', url: 'https://raw.githubusercontent.com/saltysweeteasy/my-MUSIC/main/(YOASOBI)%２  Sungha Jung', url: 'https://raw.githubusercontent.com/saltysweeteasy/my-MUSIC/main/(YOASOBI)%２  Sungha Jung', url: 'https://raw.githubusercontent.com/saltysweeteasy/my-MUSIC/main/(YOASOBI)%２  Sungha Jung', url: 'https://raw.githubusercontent.com/saltysweeteasy/my-MUSIC/main/(YOASOBI)%２  Sungha Jung', url: 'https://raw.githubusercontent.com/saltysweeteasy/my-MUSIC/main/(YOASOBI)%２  Sungha Jung', url: ' https// raw.githubusercontent com saltYSWEETEASY my-MUSIC main ( Y O A S O B I ) %３ＤＲＡＭＥ %Ｅ３％８１％８Ａ％Ｅ３％８１％９６％Ｅ３％８１％９６％Ｅ３％８１％９６％Ｅ３％８１％９６％Ｅ３％８１％９６％Ｅ３％８１％９６％Ｅ３％８１％９６％Ｅ３％８１％９６٪ %５ＢＱＩＰ＿ＺｄＢｈｈＧＵ٪ %５Ｄ．ｍｐ３' },
+            { id : "racing-into-the-night" , name : "RACING INTO THE NIGHT(Yoasobi) -Sun gh a J ung" ,	url :	'https// raw.githubusercontent com saltYSWEETEASY my-MUSIC main ( Y O A S O B I ) %ＲＡＣＩＮＧ %ＩＮＴＯ %ＴＨＥ %ＮＩＧＨＴ %Ｅ３ ％８１ ％９６ ％Ｅ３ ％８１ ％９６ ％Ｅ３ ％８１ ％９６ ％Ｅ３ ％８１ ％９６ ％Ｅ３ ％８１ ％９６ ％Ｅ３ ％８１ ％９６٪ %５ＢＺｇ５ｆｍｎｒＲｚｂｇ٪ %５Ｄ．ｍｐ３' },
+            { id : "crazier" , name : "CRAZIER(Taylor Swift) -Arthur Miguel" ,	url :	'https// raw.githubusercontent com saltYSWEETEASY my-MUSIC main ( T a y l o r　Ｓｗｉｆｔ ) %ＣＲＡＺＩＥＲ　(Ｔａｙｌｏｒ　Ｓｗｉｆｔ)　ｃｏｖｅｒ　ｂｙ　Ａｒｔｈｕｒ　Ｍｉｇｕｅｌ٪ %５ＢＪｕＶｒＯＢＩ--_ｇ٪ %５Ｄ．ｍｐ３' },
+            { id : "pangarap-lang-kita" , name : "PANGARAP LANG KITA - PAROKYA NI EDGAR" ,	url :	'https// raw.githubusercontent com saltYSWEETEASY my-MUSIC main ( P A N G A R A P　ＬＡＮＧ　ＫＩＴＡ ) - Parokya Ni Edgar feat, Happy Sy (lyrics) (3 twenty KBps).mp3' },
+            { id : "our-house" , name : "OUR HOUSE" ,	url :	'https// raw.githubusercontent com saltYSWEETEASY my-MUSIC main ( C r o s b y ,　Ｓｔｉｌｌｓ ,　Ｎａｓｈ　&　Ｙｏｕｎｇ ) - OUR HOUSE (Joni Mitchell and Graham Nash fan video) (rrW7Mc3_wSc).mp3' }
         ];
-        
+
         let currentTrackIndex = 0;
         let isLooping = false;
         
@@ -904,8 +907,10 @@
             
             // Update video background
             let videoUrl = theme.video;
-            // Override with custom videos for specific tracks
-            if (customVideos[index]) videoUrl = customVideos[index];
+            const track = playlist[index] || {};
+            const trackId = track.id || index;
+            // Override with custom videos using the track's explicit ID
+            if (customVideos[trackId]) videoUrl = customVideos[trackId];
             
             if (videoUrl && videoUrl !== "") {
                 bgVideo.style.opacity = "0.4";
@@ -916,7 +921,7 @@
                 // No video, fade out current video
                 bgVideo.style.opacity = "0";
                 setTimeout(() => {
-                    if (bgVideo.src && !customVideos[index] && !songThemes[index]?.video) {
+                    if (bgVideo.src && !customVideos[trackId] && !songThemes[index]?.video) {
                         bgVideo.src = "";
                     }
                 }, 500);
